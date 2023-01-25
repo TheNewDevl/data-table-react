@@ -1,1 +1,1 @@
-export { ReactTable } from "./ReactTable";
+export { DataTable } from "./ReactTable";

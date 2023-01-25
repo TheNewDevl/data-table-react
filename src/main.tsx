@@ -1,9 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { ReactTable } from "./ReactTable";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { DataTable } from "./ReactTable";
+import { TableCtxProvider } from "./context/TableContext";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <ReactTable />
-  </React.StrictMode>
+createRoot(document.getElementById("root") as HTMLElement).render(
+  <StrictMode>
+    <TableCtxProvider>
+      <DataTable />
+    </TableCtxProvider>
+  </StrictMode>
 );

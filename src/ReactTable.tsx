@@ -1,3 +1,3 @@
-export function ReactTable() {
+export function DataTable() {
   return <div className="App">Table</div>;
 }
