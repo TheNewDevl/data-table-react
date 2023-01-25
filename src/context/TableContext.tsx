@@ -1,22 +1,17 @@
-import { createContext, FC, PropsWithChildren, useContext, useState } from "react";
+import { createContext, FC, useContext, useState } from "react";
+import { TableContextInterface, TableProviderProps } from "../types";
 
 /** Create the table context */
-interface TableContext {
-  data: any[];
-  updateData: (data: any[]) => void;
-}
-export const TableContext = createContext<TableContext>({} as TableContext);
+export const TableContext = createContext<TableContextInterface>({} as TableContextInterface);
 
 /** Create the Table context provider */
-interface TableProviderProps extends PropsWithChildren {}
-
 export const TableCtxProvider: FC<TableProviderProps> = ({ children }) => {
   const [data, setData] = useState<any[]>([]);
 
   const updateData = (data: any[]): void => {
     setData(data);
   };
-  const value: TableContext = { data, updateData };
+  const value: TableContextInterface = { data, updateData };
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>;
 };
