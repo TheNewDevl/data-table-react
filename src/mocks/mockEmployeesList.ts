@@ -8,7 +8,7 @@ export const mockEmployees = [
     street: "7 Cardinal Park",
     city: "Washington",
     state: "DC",
-    ZipCode: "20535",
+    zipCode: "20535",
   },
   {
     firstName: "Jameson",
@@ -19,7 +19,7 @@ export const mockEmployees = [
     street: "1 Meadow Ridge Hill",
     city: "Toledo",
     state: "OH",
-    ZipCode: "43656",
+    zipCode: "43656",
   },
   {
     firstName: "Hubert",
@@ -30,7 +30,7 @@ export const mockEmployees = [
     street: "3 Melvin Crossing",
     city: "New York City",
     state: "NY",
-    ZipCode: "10203",
+    zipCode: "10203",
   },
   {
     firstName: "Graham",
@@ -41,7 +41,7 @@ export const mockEmployees = [
     street: "2 Kings Circle",
     city: "Portland",
     state: "OR",
-    ZipCode: "97286",
+    zipCode: "97286",
   },
   {
     firstName: "Corrina",
@@ -52,7 +52,7 @@ export const mockEmployees = [
     street: "268 Crest Line Place",
     city: "Charleston",
     state: "SC",
-    ZipCode: "29416",
+    zipCode: "29416",
   },
   {
     firstName: "Field",
@@ -63,7 +63,7 @@ export const mockEmployees = [
     street: "0 Chinook Place",
     city: "Columbus",
     state: "OH",
-    ZipCode: "43268",
+    zipCode: "43268",
   },
   {
     firstName: "Estel",
@@ -74,7 +74,7 @@ export const mockEmployees = [
     street: "2 Hoepker Crossing",
     city: "Houston",
     state: "TX",
-    ZipCode: "77085",
+    zipCode: "77085",
   },
   {
     firstName: "Sophey",
@@ -85,7 +85,7 @@ export const mockEmployees = [
     street: "31234 Hovde Lane",
     city: "Jackson",
     state: "MS",
-    ZipCode: "39296",
+    zipCode: "39296",
   },
   {
     firstName: "Gisela",
@@ -96,7 +96,7 @@ export const mockEmployees = [
     street: "7460 Moland Street",
     city: "Pittsburgh",
     state: "PA",
-    ZipCode: "15255",
+    zipCode: "15255",
   },
   {
     firstName: "Tomlin",
@@ -107,7 +107,7 @@ export const mockEmployees = [
     street: "447 Bobwhite Circle",
     city: "Richmond",
     state: "VA",
-    ZipCode: "23289",
+    zipCode: "23289",
   },
   {
     firstName: "Esra",
@@ -118,7 +118,7 @@ export const mockEmployees = [
     street: "49231 Banding Junction",
     city: "Houston",
     state: "TX",
-    ZipCode: "77281",
+    zipCode: "77281",
   },
   {
     firstName: "Devland",
@@ -129,7 +129,7 @@ export const mockEmployees = [
     street: "61 Algoma Avenue",
     city: "Denton",
     state: "TX",
-    ZipCode: "76205",
+    zipCode: "76205",
   },
   {
     firstName: "Angelina",
@@ -140,7 +140,7 @@ export const mockEmployees = [
     street: "5739 Drewry Avenue",
     city: "San Francisco",
     state: "CA",
-    ZipCode: "94132",
+    zipCode: "94132",
   },
   {
     firstName: "Ginnifer",
@@ -151,7 +151,7 @@ export const mockEmployees = [
     street: "63070 Judy Drive",
     city: "Anniston",
     state: "AL",
-    ZipCode: "36205",
+    zipCode: "36205",
   },
   {
     firstName: "Olivia",
@@ -162,7 +162,7 @@ export const mockEmployees = [
     street: "0242 Hazelcrest Terrace",
     city: "Ridgely",
     state: "MD",
-    ZipCode: "21684",
+    zipCode: "21684",
   },
   {
     firstName: "Olivette",
@@ -173,7 +173,7 @@ export const mockEmployees = [
     street: "9327 Hansons Circle",
     city: "Austin",
     state: "TX",
-    ZipCode: "78710",
+    zipCode: "78710",
   },
   {
     firstName: "Kim",
@@ -184,7 +184,7 @@ export const mockEmployees = [
     street: "1493 Tennessee Park",
     city: "Atlanta",
     state: "GA",
-    ZipCode: "30323",
+    zipCode: "30323",
   },
   {
     firstName: "Perice",
@@ -195,7 +195,7 @@ export const mockEmployees = [
     street: "29443 Corscot Trail",
     city: "Jacksonville",
     state: "FL",
-    ZipCode: "32209",
+    zipCode: "32209",
   },
   {
     firstName: "Constantin",
@@ -206,7 +206,7 @@ export const mockEmployees = [
     street: "12298 Dayton Plaza",
     city: "Memphis",
     state: "TN",
-    ZipCode: "38168",
+    zipCode: "38168",
   },
   {
     firstName: "Cliff",
@@ -217,6 +217,6 @@ export const mockEmployees = [
     street: "69248 Thierer Drive",
     city: "Meridian",
     state: "MS",
-    ZipCode: "39305",
+    zipCode: "39305",
   },
 ];
