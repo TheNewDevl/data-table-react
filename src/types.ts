@@ -30,7 +30,7 @@ export interface DataTableProps {
 }
 
 // Search Hook
-export interface SearchHookProps {
+export interface SearchHookReturn {
   searchTerm: string;
   handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -51,7 +51,7 @@ export interface PaginationHandlers {
   incrementPage: () => void;
   decrementPage: () => void;
 }
-export interface PaginationHookProps {
+export interface PaginationHookReturn {
   paginationValues: PaginationValues;
   paginationHandlers: PaginationHandlers;
 }

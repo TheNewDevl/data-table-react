@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTableCtx } from "../context/TableContext";
-import { DataTableConfig, PaginationHandlers, PaginationHookProps, PaginationValues } from "../types";
+import { DataTableConfig, PaginationHandlers, PaginationHookReturn, PaginationValues } from "../types";
 
 export const usePagination = (
   rowsPerPageOpts: number[] | undefined,
   { pagination }: Partial<DataTableConfig>
-): PaginationHookProps => {
+): PaginationHookReturn => {
   /** Get data from context **/
   const { filteredData: data } = useTableCtx();
 
@@ -89,9 +89,14 @@ export const usePagination = (
     }
   }, [data, currentPage, rowsPerPage]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (pagination) setCurrentPage(1);
-  }, [data]);
+  }, [data]);*/
+  useEffect(() => {
+    const resetCurrentPage = () => setCurrentPage(1);
+    window.addEventListener("filter", resetCurrentPage);
+    return () => window.removeEventListener("filter", resetCurrentPage);
+  }, []);
 
   return { paginationValues, paginationHandlers };
 };

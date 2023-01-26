@@ -45,7 +45,7 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
           </tr>
         </thead>
         <tbody>
-          {(paginationValues.paginatedData ?? filteredData)?.map((row, index) => (
+          {(configState.pagination ? paginationValues.paginatedData : filteredData)?.map((row, index) => (
             <tr key={index}>
               {columns?.map((column, index) => (
                 <td key={index}>{row[column.data]}</td>

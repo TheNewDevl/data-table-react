@@ -1,4 +1,4 @@
-import { DataTableConfig, SearchHookProps } from "../types";
+import { DataTableConfig, SearchHookReturn } from "../types";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTableCtx } from "../context/TableContext";
 
@@ -6,7 +6,7 @@ import { useTableCtx } from "../context/TableContext";
  * @param config - The table config
  * If the search is enabled, the hook will update the filtered data state using the search term
  */
-export const useSearch = (config: Partial<DataTableConfig>): SearchHookProps => {
+export const useSearch = (config: Partial<DataTableConfig>): SearchHookReturn => {
   /** Get the context */
   const { initialData, updateFilteredData, resetFilteredData } = useTableCtx();
   /** Search term state */
@@ -33,6 +33,8 @@ export const useSearch = (config: Partial<DataTableConfig>): SearchHookProps => 
   useEffect(() => {
     if (config.search) {
       updateFilteredData(filteredData);
+      const filterEvent = new CustomEvent("filter");
+      dispatchEvent(filterEvent);
     } else {
       resetFilteredData();
     }
