@@ -4,11 +4,13 @@ import { DataTableConfig, DataTableProps } from "./types";
 import { useSearch } from "./hooks/useSearch";
 import { usePagination } from "./hooks/usePagination";
 import { Pagination } from "./components/Pagination/Pagination";
+import { useSort } from "./hooks/useSort";
 
 const defaultConfig: DataTableConfig = {
   search: true,
   pagination: true,
   rowsPerPageOptions: [2, 25, 50],
+  sortable: true,
 };
 
 export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
@@ -21,11 +23,17 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
   /** Save the props data in the context */
   useEffect(() => updateInitialData(data), []);
 
+  /** Use the useSort hook */
+  const { sortConfig, handleSortConfig, sortDataFn } = useSort(configState);
+
   /** Use the useSearch hook */
-  const { searchTerm, handleSearch } = useSearch(configState);
+  const { searchTerm, handleSearch } = useSearch(configState, configState.sortable ? sortDataFn : undefined);
 
   /** Use the usePagination hook */
   const { paginationValues, paginationHandlers } = usePagination(configState.rowsPerPageOptions, configState);
+
+  const sortIndicator = (columnKey: string) =>
+    sortConfig.sortKey === columnKey && (sortConfig.sortOrder === "asc" ? "↑" : "↓");
 
   /** Render the table */
   return (
@@ -40,7 +48,10 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
         <thead>
           <tr>
             {columns?.map((column, index) => (
-              <th key={index}>{column.title}</th>
+              <th onClick={() => (configState.sortable ? handleSortConfig(column.data) : null)} key={index}>
+                {column.title}
+                {sortIndicator(column.data)}
+              </th>
             ))}
           </tr>
         </thead>

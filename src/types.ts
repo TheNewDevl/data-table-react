@@ -22,6 +22,7 @@ export interface DataTableConfig {
   search: boolean;
   pagination: boolean;
   rowsPerPageOptions: number[];
+  sortable: boolean;
 }
 export interface DataTableProps {
   data: { [key: string]: any }[];
@@ -64,4 +65,15 @@ export interface PaginationProps {
 export interface PaginationButtonsProps {
   values: PaginationValues;
   handlers: PaginationHandlers;
+}
+
+// Sort hook
+export interface SortConfig {
+  sortKey: string;
+  sortOrder: "asc" | "desc";
+}
+export interface SortHookReturn {
+  sortConfig: SortConfig;
+  handleSortConfig: (key: string) => void;
+  sortDataFn: (data: any[]) => any[];
 }

@@ -4,9 +4,11 @@ import { useTableCtx } from "../context/TableContext";
 
 /** Search hook
  * @param config - The table config
+ * @param sortData - The function used to sort data (if the table is sortable)
  * If the search is enabled, the hook will update the filtered data state using the search term
+ * Data will also be passed in the sort function if the table is sortable
  */
-export const useSearch = (config: Partial<DataTableConfig>): SearchHookReturn => {
+export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: any[]) => any[]): SearchHookReturn => {
   /** Get the context */
   const { initialData, updateFilteredData, resetFilteredData } = useTableCtx();
   /** Search term state */
@@ -27,18 +29,20 @@ export const useSearch = (config: Partial<DataTableConfig>): SearchHookReturn =>
     );
   }, [initialData, searchTerm]);
 
-  /** When filteredData change, the filteredData state will be updated
+  /**
+   * When filteredData change, the filteredData state will be updated
+   * Also pass the data into the sort function if the table is sortable
    * If config is turn off, reset the filtered data
    */
   useEffect(() => {
     if (config.search) {
-      updateFilteredData(filteredData);
+      updateFilteredData(sortData ? sortData(filteredData) : filteredData);
       const filterEvent = new CustomEvent("filter");
       dispatchEvent(filterEvent);
     } else {
       resetFilteredData();
     }
-  }, [filteredData, config, updateFilteredData, resetFilteredData]);
+  }, [filteredData, config]);
 
   return { searchTerm, handleSearch };
 };
