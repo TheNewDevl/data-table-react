@@ -5,7 +5,7 @@ import { useSearch } from "./hooks/useSearch";
 import { usePagination } from "./hooks/usePagination";
 import { Pagination } from "./components/Pagination/Pagination";
 import { useSort } from "./hooks/useSort";
-import { isValidDate } from "./functions/dates";
+import { isValidDate } from "./functions/dates/dates";
 
 const defaultConfig: DataTableConfig = {
   search: true,

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { DataTableConfig, SortConfig, SortHookReturn } from "../types";
 import { useTableCtx } from "../context/TableContext";
-import { isValidDate } from "../functions/dates";
-import { dateCompareFn, numberCompareFn, stringCompareFn } from "../functions/sort";
+import { isValidDate } from "../functions/dates/dates";
+import { dateCompareFn, numberCompareFn, stringCompareFn } from "../functions/sort/sort";
 
 export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn => {
   /** Sort config States */
