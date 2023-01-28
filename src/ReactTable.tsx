@@ -5,12 +5,14 @@ import { useSearch } from "./hooks/useSearch";
 import { usePagination } from "./hooks/usePagination";
 import { Pagination } from "./components/Pagination/Pagination";
 import { useSort } from "./hooks/useSort";
+import { isValidDate } from "./functions/dates";
 
 const defaultConfig: DataTableConfig = {
   search: true,
   pagination: true,
   rowsPerPageOptions: [2, 25, 50],
   sortable: true,
+  country: "fr-FR",
 };
 
 export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
@@ -61,9 +63,18 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
         <tbody>
           {(configState.pagination ? paginationValues.paginatedData : filteredData)?.map((row, index) => (
             <tr key={index}>
-              {columns?.map((column, index) => (
-                <td key={index}>{row[column.data]}</td>
-              ))}
+              {columns?.map((column, index) => {
+                if (column.type === "date" && isValidDate(row[column.data])) {
+                  const dateFormat = new Intl.DateTimeFormat(configState.country, {
+                    year: "numeric",
+                    month: "long",
+                    day: "2-digit",
+                  }).format(new Date(row[column.data]));
+                  return <td key={index}>{dateFormat}</td>;
+                } else {
+                  return <td key={index}>{row[column.data]}</td>;
+                }
+              })}
             </tr>
           ))}
         </tbody>

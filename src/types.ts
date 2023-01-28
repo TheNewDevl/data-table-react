@@ -24,6 +24,7 @@ export interface DataTableConfig {
   pagination: boolean;
   rowsPerPageOptions: number[];
   sortable: boolean;
+  country: string;
 }
 export interface DataTableProps {
   data: { [key: string]: any }[];
