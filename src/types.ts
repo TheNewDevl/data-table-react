@@ -15,6 +15,7 @@ export type DataKey = string;
 export interface ColumnType {
   title: string;
   data: DataKey;
+  type?: SortConfig["sortType"];
 }
 
 //Data table component
@@ -26,7 +27,7 @@ export interface DataTableConfig {
 }
 export interface DataTableProps {
   data: { [key: string]: any }[];
-  columns: { title: string; data: string }[];
+  columns: { title: string; data: string; type?: SortConfig["sortType"] }[];
   config?: Partial<DataTableConfig>;
 }
 
@@ -71,9 +72,11 @@ export interface PaginationButtonsProps {
 export interface SortConfig {
   sortKey: string;
   sortOrder: "asc" | "desc";
+  sortType: "string" | "number" | "date" | undefined;
 }
 export interface SortHookReturn {
   sortConfig: SortConfig;
-  handleSortConfig: (key: string) => void;
+  handleSortConfig: (key: string, type?: SortConfig["sortType"]) => void;
   sortDataFn: (data: any[]) => any[];
 }
+export type SortCompareFn = (a: any, b: any, sortOrder?: SortConfig["sortOrder"]) => number;

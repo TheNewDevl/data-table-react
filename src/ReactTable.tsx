@@ -48,7 +48,10 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
         <thead>
           <tr>
             {columns?.map((column, index) => (
-              <th onClick={() => (configState.sortable ? handleSortConfig(column.data) : null)} key={index}>
+              <th
+                onClick={() => (configState.sortable ? handleSortConfig(column.data, column.type) : null)}
+                key={index}
+              >
                 {column.title}
                 {sortIndicator(column.data)}
               </th>
