@@ -59,7 +59,7 @@ export const usePagination = (
    * @param page - Page number
    */
   const isActive = (page?: number): boolean => {
-    return page ? currentPage === page : currentPage === Math.ceil(data.length / rowsPerPage) || data.length === 0;
+    return page ? currentPage === page : currentPage === totalPages || data.length === 0;
   };
 
   /** Contain all pagination value */
