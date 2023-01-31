@@ -17,13 +17,13 @@ export const Pagination: FC<PaginationProps> = ({ columns, handlers, values, dat
   const { handleChangeRowsPerPage } = handlers;
 
   return (
-    <tr>
+    <tr data-testid="pagination">
       <td colSpan={columns}>
         <div>
           <span>Rows per page:</span>
-          <select value={rowsPerPage} onChange={handleChangeRowsPerPage}>
+          <select role="listbox" value={rowsPerPage} onChange={handleChangeRowsPerPage}>
             {rowsPerPageOpts?.map((option) => (
-              <option key={option} value={option}>
+              <option role="option" key={option} value={option}>
                 {option}
               </option>
             ))}

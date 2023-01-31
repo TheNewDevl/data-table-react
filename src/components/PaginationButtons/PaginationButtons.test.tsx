@@ -1,33 +1,17 @@
 import React from "react";
 import { render, fireEvent, getAllByText } from "@testing-library/react";
 import { PaginationButtons } from "./PaginationButtons";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { PaginationHandlers, PaginationValues } from "../../types";
+import { mockUsePagination } from "../../tests/mocks/paginationHook";
 
 describe("PaginationButtons", () => {
   let values: PaginationValues;
   let handlers: PaginationHandlers;
 
   beforeEach(() => {
-    values = {
-      pageButtons: [1, 2, 3, 4, 5],
-      currentPage: 1,
-      isActive: vi
-        .fn()
-        .mockImplementation((page?: number) =>
-          page ? values.currentPage === page : values.currentPage === values.totalPages
-        ),
-      paginatedData: [],
-      rowsPerPageOpts: [],
-      rowsPerPage: 10,
-      totalPages: 5,
-    };
-    handlers = {
-      selectPage: vi.fn(),
-      incrementPage: vi.fn(),
-      decrementPage: vi.fn(),
-      handleChangeRowsPerPage: vi.fn(),
-    };
+    values = mockUsePagination().values;
+    handlers = mockUsePagination().handlers;
   });
 
   it("should render the correct number of page buttons", () => {
