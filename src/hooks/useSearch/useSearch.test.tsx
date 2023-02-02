@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, renderHook } from "@testing-library/react";
 import { useSearch } from "./useSearch";
-import { TableCtxProvider, useTableCtx } from "../context/TableContext";
+import { TableCtxProvider, useTableCtx } from "../../context/TableContext";
 import { ChangeEvent, FC } from "react";
-import { DataTableConfig } from "../types";
+import { DataTableConfig } from "../../types";
 
 const initialDatas = [
   { name: "John", age: 25 },
@@ -71,7 +71,7 @@ describe("useSearch hook test suit", () => {
     expect(getByTestId("filteredData").textContent).toBe("2");
   });
 
-  it("should not update filteredData when table is not sortable", () => {
+  it("should not update filteredData when table is not searchable", () => {
     const { getByTestId } = setup({ search: false });
     const searchTerm = "25";
 

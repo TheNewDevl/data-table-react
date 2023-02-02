@@ -1,6 +1,6 @@
-import { DataTableConfig, SearchHookReturn } from "../types";
+import { DataTableConfig, SearchHookReturn } from "../../types";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { useTableCtx } from "../context/TableContext";
+import { useTableCtx } from "../../context/TableContext";
 
 /** Search hook
  * @param config - The table config

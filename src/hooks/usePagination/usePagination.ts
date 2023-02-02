@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useTableCtx } from "../context/TableContext";
-import { DataTableConfig, PaginationHandlers, PaginationHookReturn, PaginationValues } from "../types";
+import { useTableCtx } from "../../context/TableContext";
+import { DataTableConfig, PaginationHandlers, PaginationHookReturn, PaginationValues } from "../../types";
 
 export const usePagination = (
   rowsPerPageOpts: number[] | undefined,
