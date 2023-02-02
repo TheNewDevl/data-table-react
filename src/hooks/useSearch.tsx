@@ -24,9 +24,13 @@ export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: an
 
   /** Filter the data using the search term. Will only recompute if initial data or search term change */
   const filteredData = useMemo(() => {
-    return [...initialData].filter((item: { [key: string]: any }) =>
-      Object.values(item).some((val) => val.toString().toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+    if (config.search && searchTerm) {
+      return [...initialData].filter((item: { [key: string]: any }) =>
+        Object.values(item).some((val) => val.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    } else {
+      return initialData;
+    }
   }, [initialData, searchTerm]);
 
   /**
