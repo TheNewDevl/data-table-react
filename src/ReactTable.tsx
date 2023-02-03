@@ -90,7 +90,11 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
   const { searchTerm, handleSearch } = useSearch(configState, configState.sortable ? sortDataFn : undefined);
 
   /** Use the usePagination hook */
-  const { paginationValues, paginationHandlers } = usePagination(configState.rowsPerPageOptions, configState);
+  const { paginationValues, paginationHandlers } = usePagination(
+    configState.rowsPerPageOptions,
+    configState,
+    filteredData
+  );
 
   const sortIndicator = (columnKey: string) =>
     sortConfig.sortKey === columnKey && (sortConfig.sortOrder === "asc" ? "↑" : "↓");

@@ -1,4 +1,4 @@
-import { TableCtxProvider, useTableCtx } from "./TableContext";
+import { TableContext, TableCtxProvider, useTableCtx } from "./TableContext";
 import { FC } from "react";
 import { fireEvent, render } from "@testing-library/react";
 
@@ -26,6 +26,9 @@ const setup = () => {
 };
 
 describe("Table context test suite", () => {
+  it("should be defined", () => {
+    expect(TableContext).toBeDefined();
+  });
   it("Should render", () => {
     const { getByTestId } = setup();
     expect(getByTestId("initialData").textContent).toBe("0");
