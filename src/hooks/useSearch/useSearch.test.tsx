@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, renderHook } from "@testing-library/react";
 import { useSearch } from "./useSearch";
 import { TableCtxProvider, useTableCtx } from "../../context/TableContext";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, JSXElementConstructor } from "react";
 import { DataTableConfig } from "../../types";
 
 const initialDatas = [
@@ -17,16 +17,15 @@ const FakeComponent: FC<{ config: Partial<DataTableConfig>; sortData?: (data: an
   config,
   sortData,
 }) => {
-  const { filteredData, initialData, updateInitialData } = useTableCtx();
+  const { tableData, updateTableData } = useTableCtx();
   const { searchTerm, handleSearch } = useSearch(config, sortData);
   return (
     <div>
       <input type="text" data-testid="input" value={searchTerm} onChange={handleSearch} />
       <p data-testid="searchTerm">{searchTerm}</p>
       <button data-testid="handleConfig" onClick={() => (config.search = !config.search)}></button>
-      <div data-testid="initialData">{initialData.length}</div>
-      <div data-testid="filteredData">{filteredData.length}</div>
-      <button data-testid="updateInitialData" onClick={() => updateInitialData(initialDatas)} />
+      <div data-testid="tableData">{tableData.length}</div>
+      <button data-testid="updateTableData" onClick={() => updateTableData(initialDatas)} />
     </div>
   );
 };
@@ -34,7 +33,7 @@ const FakeComponent: FC<{ config: Partial<DataTableConfig>; sortData?: (data: an
 const setup = (config: Partial<DataTableConfig>, sortData?: (data: any[]) => any[]) => {
   return {
     ...render(
-      <TableCtxProvider>
+      <TableCtxProvider data={initialDatas}>
         <FakeComponent config={config} sortData={sortData} />
       </TableCtxProvider>
     ),
@@ -43,13 +42,19 @@ const setup = (config: Partial<DataTableConfig>, sortData?: (data: any[]) => any
 
 describe("useSearch hook test suit", () => {
   it("should return searchTerm and handle search function", () => {
-    const { result } = renderHook(() => useSearch({ search: true }), { wrapper: TableCtxProvider });
+    TableCtxProvider.defaultProps = { data: initialDatas };
+    const { result } = renderHook(() => useSearch({ search: true }), {
+      wrapper: TableCtxProvider as JSXElementConstructor<any>,
+    });
     expect(result.current.searchTerm).toBe("");
     expect(typeof result.current.handleSearch).toBe("function");
   });
 
   it("should update the searchTerm when handleSearch is used", () => {
-    const { result } = renderHook(() => useSearch({ search: true }), { wrapper: TableCtxProvider });
+    TableCtxProvider.defaultProps = { data: initialDatas };
+    const { result } = renderHook(() => useSearch({ search: true }), {
+      wrapper: TableCtxProvider as JSXElementConstructor<any>,
+    });
     const searchTerm = "new term";
     const event = { target: { value: searchTerm } } as ChangeEvent<HTMLInputElement>;
     act(() => {
@@ -58,29 +63,29 @@ describe("useSearch hook test suit", () => {
     expect(result.current.searchTerm).toBe(searchTerm);
   });
 
-  it("should update filteredData when search term change and table is sortable", () => {
+  it("should update tableData when search term change and table is sortable", () => {
     const { getByTestId } = setup({ search: true });
     const searchTerm = "25";
 
-    fireEvent.click(getByTestId("updateInitialData"));
-    expect(getByTestId("filteredData").textContent).toBe(initialDatas.length.toString());
+    fireEvent.click(getByTestId("updateTableData"));
+    expect(getByTestId("tableData").textContent).toBe(initialDatas.length.toString());
 
     const input = getByTestId("input");
     fireEvent.change(input, { target: { value: searchTerm } });
     expect(getByTestId("searchTerm").textContent).toBe(searchTerm);
-    expect(getByTestId("filteredData").textContent).toBe("2");
+    expect(getByTestId("tableData").textContent).toBe("2");
   });
 
-  it("should not update filteredData when table is not searchable", () => {
+  it("should not update tableData when table is not searchable", () => {
     const { getByTestId } = setup({ search: false });
-    const searchTerm = "25";
+    const searchTerm = "John";
 
-    fireEvent.click(getByTestId("updateInitialData"));
-    expect(getByTestId("filteredData").textContent).toBe(initialDatas.length.toString());
+    fireEvent.click(getByTestId("updateTableData"));
+    expect(getByTestId("tableData").textContent).toBe(initialDatas.length.toString());
 
     const input = getByTestId("input");
     fireEvent.change(input, { target: { value: searchTerm } });
-    expect(getByTestId("filteredData").textContent).toBe(initialDatas.length.toString());
+    expect(getByTestId("tableData").textContent).toBe(initialDatas.length.toString());
   });
 
   it("should update filtered data using sortData fn if provided", () => {
@@ -95,14 +100,16 @@ describe("useSearch hook test suit", () => {
     expect(mockSortDataFn).not.toHaveBeenCalled();
   });
 
-  it("should ", () => {
-    const config = { search: true };
+  it("should dispatch filter event", () => {
     const mockDispatchEvent = vi.fn();
     const dispatchSpy = vi
       .spyOn(window, "dispatchEvent")
       .mockImplementation((event: Event) => mockDispatchEvent(event));
 
-    const { result } = renderHook(() => useSearch(config), { wrapper: TableCtxProvider });
+    TableCtxProvider.defaultProps = { data: initialDatas };
+    const { result } = renderHook(() => useSearch({ search: true }), {
+      wrapper: TableCtxProvider as JSXElementConstructor<any>,
+    });
     act(() => result.current.handleSearch({ target: { value: "test" } } as ChangeEvent<HTMLInputElement>));
     expect(dispatchSpy).toHaveBeenCalledWith(new CustomEvent("filter"));
   });

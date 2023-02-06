@@ -1,13 +1,14 @@
 import { ChangeEvent, PropsWithChildren } from "react";
 
 //ctx
-export interface TableProviderProps extends PropsWithChildren {}
+export interface TableProviderProps extends PropsWithChildren {
+  data: any[];
+}
 export interface TableContextInterface {
   initialData: any[];
-  filteredData: any[];
-  updateInitialData: (data: any[]) => void;
-  resetFilteredData: () => void;
-  updateFilteredData: (data: any[]) => void;
+  tableData: any[];
+  updateTableData: (data: any[]) => void;
+  resetTableData: () => void;
 }
 
 // Columns
@@ -24,10 +25,13 @@ export interface DataTableConfig {
   pagination: boolean;
   rowsPerPageOptions: number[];
   sortable: boolean;
-  country: string;
+  dates: {
+    format: "long" | "short" | "numeric" | "2-digit";
+    country: string;
+  };
 }
 export interface DataTableProps {
-  data: { [key: string]: any }[];
+  data: any[];
   columns: { title: string; data: string; type?: SortConfig["sortType"] }[];
   config?: Partial<DataTableConfig>;
 }

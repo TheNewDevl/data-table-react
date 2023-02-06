@@ -7,8 +7,6 @@ export const usePagination = (
   { pagination }: Partial<DataTableConfig>,
   data: any[]
 ): PaginationHookReturn => {
-  /** Get data from context **/
-
   /** States for pagination **/
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOpts ? rowsPerPageOpts[0] : 0);

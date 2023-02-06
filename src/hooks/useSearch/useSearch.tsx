@@ -10,7 +10,7 @@ import { useTableCtx } from "../../context/TableContext";
  */
 export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: any[]) => any[]): SearchHookReturn => {
   /** Get the context */
-  const { initialData, updateFilteredData, resetFilteredData } = useTableCtx();
+  const { tableData, updateTableData, initialData, resetTableData } = useTableCtx();
   /** Search term state */
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -24,27 +24,27 @@ export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: an
 
   /** Filter the data using the search term. Will only recompute if initial data or search term change */
   const filteredData = useMemo(() => {
-    if (config.search && searchTerm) {
-      return [...initialData].filter((item: { [key: string]: any }) =>
+    if (config.search) {
+      return initialData.filter((item: { [key: string]: any }) =>
         Object.values(item).some((val) => val.toString().toLowerCase().includes(searchTerm.toLowerCase()))
       );
     } else {
-      return initialData;
+      return tableData;
     }
-  }, [initialData, searchTerm]);
+  }, [searchTerm]);
 
   /**
-   * When filteredData change, the filteredData state will be updated
+   * When tableData change, the tableData state will be updated
    * Also pass the data into the sort function if the table is sortable
    * If config is turn off, reset the filtered data
    */
   useEffect(() => {
     if (config.search) {
-      updateFilteredData(sortData ? sortData(filteredData) : filteredData);
+      updateTableData(sortData ? sortData(filteredData) : filteredData);
       const filterEvent = new CustomEvent("filter");
       dispatchEvent(filterEvent);
     } else {
-      resetFilteredData();
+      resetTableData();
     }
   }, [filteredData, config]);
 

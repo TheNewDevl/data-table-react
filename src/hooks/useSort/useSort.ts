@@ -13,7 +13,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
   });
 
   /** Get data from ctx */
-  const { filteredData, updateFilteredData } = useTableCtx();
+  const { tableData, updateTableData } = useTableCtx();
 
   /**
    * Update sort config. If the same key is clicked, toggle the sort order
@@ -50,7 +50,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
       const valB = b[sortKey] ?? defaultValues[sortType ?? "string"];
 
       // Call the correct compare function based on the sort type
-      if (sortType === "date") {
+      if (sortType === "date" && isValidDate(valA) && isValidDate(valB)) {
         return dateCompareFn(valA, valB, sortOrder);
       } else if (sortType === "number") {
         return numberCompareFn(valA, valB, sortOrder);
@@ -70,7 +70,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
 
   /** Update data when sortConfig change */
   useEffect(() => {
-    updateFilteredData(sortDataFn(filteredData));
+    updateTableData(sortDataFn(tableData));
   }, [sortConfig]);
 
   return { sortConfig, handleSortConfig, sortDataFn };

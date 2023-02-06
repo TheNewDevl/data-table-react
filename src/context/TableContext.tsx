@@ -5,30 +5,22 @@ import { TableContextInterface, TableProviderProps } from "../types";
 export const TableContext = createContext<TableContextInterface>({} as TableContextInterface);
 
 /** Create the Table context provider */
-export const TableCtxProvider: FC<TableProviderProps> = ({ children }) => {
+export const TableCtxProvider: FC<TableProviderProps> = ({ children, data }) => {
+  /** Store data in an independent state. It will not be modified and will be used to filter data */
   const [initialData, setInitialData] = useState<any[]>([]);
-  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [tableData, updateTableData] = useState<any[]>([]);
 
-  /** When initial data change, filtered data will be updated too */
+  /** When data change, update the initial data and the table data */
   useEffect(() => {
-    setFilteredData(initialData);
-  }, [initialData]);
-
-  /** The given array will update the initial data table state */
-  const updateInitialData = (data: any[]): void => setInitialData(data);
-
-  /** Filtered data will be equal to the initial data if the search term is empty */
-  const resetFilteredData = (): void => setFilteredData(initialData);
-
-  /** Update filtered data state */
-  const updateFilteredData = (data: any[]): void => setFilteredData(data);
+    setInitialData(data);
+    updateTableData(data);
+  }, [data]);
 
   const value: TableContextInterface = {
+    tableData,
     initialData,
-    filteredData,
-    updateInitialData,
-    resetFilteredData,
-    updateFilteredData,
+    updateTableData,
+    resetTableData: (): void => updateTableData(initialData),
   };
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>;

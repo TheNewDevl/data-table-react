@@ -150,6 +150,7 @@ export const noMissingDataEmployees = [
     department: "Legal",
     street: "9 Fallview Court",
     city: "Montpelier",
+    state: "TX",
     zipCode: "05609",
   },
   {

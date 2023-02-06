@@ -16,7 +16,7 @@ export const PaginationButtons: FC<PaginationButtonsProps> = ({
   const { selectPage, incrementPage, decrementPage } = handlers;
 
   return (
-    <div>
+    <div data-testid="pages-buttons">
       <button disabled={currentPage === 1} onClick={decrementPage}>
         Previous
       </button>

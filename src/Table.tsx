@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useTableCtx } from "./context/TableContext";
 import { DataTableConfig, DataTableProps } from "./types";
 import { useSearch } from "./hooks/useSearch/useSearch";
@@ -10,13 +10,16 @@ import { isValidDate } from "./functions/dates/dates";
 const defaultConfig: DataTableConfig = {
   search: true,
   pagination: true,
-  rowsPerPageOptions: [2, 25, 50],
+  rowsPerPageOptions: [5, 25, 50],
   sortable: true,
-  country: "fr-FR",
+  dates: {
+    format: "long",
+    country: "fr-FR",
+  },
 };
 
 /**
- * #DataTable component
+ * #Table component
  *
  * ## How to use it (informations about the props)
  *
@@ -43,11 +46,11 @@ const defaultConfig: DataTableConfig = {
  * @param data The data to display in the table.
  * @param columns The columns to display in the table.
  * @param config - The configuration object of the table.
- * @returns The DataTable component
+ * @returns The Table component
  *
  * @example
  * ```jsx
- * import { DataTable } from "data-tables-react";
+ * import { Table } from "data-tables-react";
  *
  * const columns = [
  *   { title: "First Name", data: "firstName" },
@@ -64,24 +67,24 @@ const defaultConfig: DataTableConfig = {
  * const config = {
  *  pagination: true,
  *  rowsPerPageOptions: [10, 25, 50],
- *  country: "fr-FR",
+ *  date: {
+ *    format: "long",
+ *    country: "fr-FR",
+ *  },
  * };
  *
- * const App = () => <DataTable data={employees} columns={columns} />
+ * const App = () => <Table data={employees} columns={columns} />
  *
  * export default App;
  *  ```
  *
  */
-export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
+export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => {
   /** Mix default config and props config */
   const configState: DataTableConfig = useMemo(() => ({ ...defaultConfig, ...config }), [defaultConfig, config]);
 
   /** Get the context */
-  const { filteredData, updateInitialData, initialData } = useTableCtx();
-
-  /** Save the props data in the context */
-  useEffect(() => updateInitialData(data), []);
+  const { tableData } = useTableCtx();
 
   /** Use the useSort hook */
   const { sortConfig, handleSortConfig, sortDataFn } = useSort(configState);
@@ -93,7 +96,7 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
   const { paginationValues, paginationHandlers } = usePagination(
     configState.rowsPerPageOptions,
     configState,
-    filteredData
+    tableData
   );
 
   const sortIndicator = (columnKey: string) =>
@@ -105,7 +108,7 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
       {configState.search && (
         <div>
           <label htmlFor="table-search">Search:</label>
-          <input type="text" id="table-search" value={searchTerm} onChange={handleSearch} />
+          <input role={"search"} type="text" id="table-search" value={searchTerm} onChange={handleSearch} />
         </div>
       )}
       <table>
@@ -122,14 +125,14 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
             ))}
           </tr>
         </thead>
-        <tbody>
-          {(configState.pagination ? paginationValues.paginatedData : filteredData)?.map((row, index) => (
+        <tbody data-testid={"tbody"}>
+          {(configState.pagination ? paginationValues.paginatedData : tableData)?.map((row, index) => (
             <tr key={index}>
               {columns?.map((column, index) => {
                 if (column.type === "date" && isValidDate(row[column.data])) {
-                  const dateFormat = new Intl.DateTimeFormat(configState.country, {
+                  const dateFormat = new Intl.DateTimeFormat(configState.dates.country, {
                     year: "numeric",
-                    month: "long",
+                    month: configState.dates.format,
                     day: "2-digit",
                   }).format(new Date(row[column.data]));
                   return <td key={index}>{dateFormat}</td>;
@@ -141,12 +144,12 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
           ))}
         </tbody>
         {configState.pagination && (
-          <tfoot>
+          <tfoot data-testid="tfoot">
             <Pagination
               values={paginationValues}
               handlers={paginationHandlers}
               columns={columns.length}
-              dataLength={initialData.length}
+              dataLength={tableData.length}
             />
           </tfoot>
         )}

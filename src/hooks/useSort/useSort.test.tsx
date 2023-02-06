@@ -4,14 +4,21 @@ import { act, renderHook } from "@testing-library/react";
 import { TableCtxProvider } from "../../context/TableContext";
 import { dateCompareFn, numberCompareFn, stringCompareFn } from "../../functions/sort/sort";
 import { SortConfig } from "../../types";
+import { JSXElementConstructor } from "react";
 
-const setup = (config: any) => ({ ...renderHook(() => useSort(config), { wrapper: TableCtxProvider }) });
+const data = [
+  { name: "a", age: 25, date: "01-01-2023" },
+  { name: "b", age: 30, date: "01-01-2023" },
+];
+const setup = (config: any) => {
+  const Provider = TableCtxProvider;
+  Provider.defaultProps = { data };
+  return {
+    ...renderHook(() => useSort(config), { wrapper: Provider as JSXElementConstructor<any> }),
+  };
+};
 
 describe("useSort tests suit", () => {
-  const data = [
-    { name: "a", age: 25, date: "01-01-2023" },
-    { name: "b", age: 30, date: "01-01-2023" },
-  ];
   vi.mock("../../functions/sort/sort", () => ({
     numberCompareFn: vi.fn(),
     stringCompareFn: vi.fn(),
@@ -56,7 +63,7 @@ describe("useSort tests suit", () => {
   });
 
   it("should call dateCompareFn", () => {
-    const sortKey = "age";
+    const sortKey = "date";
     const sortType: SortConfig["sortType"] = "date";
 
     const { result } = setup({ sortable: true });
@@ -67,7 +74,6 @@ describe("useSort tests suit", () => {
     expect(stringCompareFn).not.toHaveBeenCalled();
     expect(dateCompareFn).toHaveBeenCalledWith(data[1][sortKey], data[0][sortKey], "asc");
   });
-
   it("should call stringCompareFn", () => {
     const sortKey = "age";
     const sortType: SortConfig["sortType"] = "string";
@@ -132,7 +138,6 @@ describe("useSort tests suit", () => {
     result.current.sortDataFn(data);
     expect(numberCompareFn).toHaveBeenCalledWith(0, 0, "asc");
   });
-
   it("should return date default value", () => {
     let sortKey = "invalid";
     const { result } = setup({ sortable: true });
