@@ -1,14 +1,23 @@
 {
-  "name": "data-table-react",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@carlco/data-table-react",
+  "version": "1.0.0",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/types.d.ts",
+  "description": "A simple data table component for React",
   "scripts": {
     "test": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build-package": "tsc --p tsconfig-package.json",
+    "preview": "vite preview",
+    "prepare": "npm run build-package",
+    "prepublishOnly": "vitest run",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,5 +34,9 @@
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
     "vitest": "^0.28.3"
-  }
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "author": "Carl"
 }
