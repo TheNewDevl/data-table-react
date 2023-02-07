@@ -1,6 +1,6 @@
 {
   "name": "@carlco/data-table-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -37,7 +37,8 @@
     "vitest": "^0.28.3"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "README.md"
   ],
   "author": "Carl"
 }
