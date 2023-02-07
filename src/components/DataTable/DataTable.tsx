@@ -1,5 +1,4 @@
 import { TableCtxProvider } from "../../context/TableContext";
-import { noMissingDataEmployees } from "../../mocks/mockEmployees";
 import { Table } from "../Table/Table";
 import { FC } from "react";
 import { DataTableProps } from "../../types/types";
@@ -66,9 +65,17 @@ import { DataTableProps } from "../../types/types";
  *
  */
 export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
-  return (
-    <TableCtxProvider data={data ?? noMissingDataEmployees}>
-      <Table columns={columns} config={config} />
-    </TableCtxProvider>
-  );
+  if (!data) {
+    console.error("You didn't provide any data to the table.");
+    return <p>You didn't provide any data to the table</p>;
+  } else if (!Array.isArray(data)) {
+    console.error("The data you provided is not an array.");
+    return <p>The data you provides is not an array</p>;
+  } else {
+    return (
+      <TableCtxProvider data={data}>
+        <Table columns={columns} config={config} />
+      </TableCtxProvider>
+    );
+  }
 };
