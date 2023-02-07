@@ -1,4 +1,4 @@
-import { PaginationButtonsProps } from "../../types";
+import { PaginationButtonsProps } from "../../types/types";
 import { FC } from "react";
 
 /**

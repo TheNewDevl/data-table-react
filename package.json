@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "main": "lib/index.js",
-  "types": "lib/types.d.ts",
+  "types": "lib/index.d.ts",
   "description": "A simple data table component for React",
   "scripts": {
     "test": "vitest",

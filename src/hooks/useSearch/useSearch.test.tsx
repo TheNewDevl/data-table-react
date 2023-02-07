@@ -3,7 +3,7 @@ import { act, fireEvent, render, renderHook } from "@testing-library/react";
 import { useSearch } from "./useSearch";
 import { TableCtxProvider, useTableCtx } from "../../context/TableContext";
 import { ChangeEvent, FC, JSXElementConstructor } from "react";
-import { DataTableConfig } from "../../types";
+import { DataTableConfig } from "../../types/types";
 
 const initialDatas = [
   { name: "John", age: 25 },

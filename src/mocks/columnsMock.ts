@@ -1,4 +1,4 @@
-import { ColumnType } from "../types";
+import { ColumnType } from "../types/types";
 
 export const columns: ColumnType[] = [
   { title: "First Name", data: "firstName" },

@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { DataTableConfig, PaginationHandlers, PaginationHookReturn, PaginationValues } from "../../types";
+import { DataTableConfig, PaginationHandlers, PaginationHookReturn, PaginationValues } from "../../types/types";
 import { calculateTotalPages, getButtons } from "./functions";
 
 export const usePagination = (

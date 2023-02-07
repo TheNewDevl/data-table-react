@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
-import { TableContextInterface, TableProviderProps } from "../types";
+import { TableContextInterface, TableProviderProps } from "../types/types";
 
 /** Create the table context */
 export const TableContext = createContext<TableContextInterface>({} as TableContextInterface);

@@ -3,7 +3,7 @@ import { useSort } from "./useSort";
 import { act, renderHook } from "@testing-library/react";
 import { TableCtxProvider } from "../../context/TableContext";
 import { dateCompareFn, numberCompareFn, stringCompareFn } from "../../functions/sort/sort";
-import { SortConfig } from "../../types";
+import { SortConfig } from "../../types/types";
 import { JSXElementConstructor } from "react";
 
 const data = [

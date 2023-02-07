@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, getAllByText } from "@testing-library/react";
 import { PaginationButtons } from "./PaginationButtons";
 import { beforeEach, describe, expect, it } from "vitest";
-import { PaginationHandlers, PaginationValues } from "../../types";
+import { PaginationHandlers, PaginationValues } from "../../types/types";
 import { mockUsePagination } from "../../tests/mocks/paginationHook";
 
 describe("PaginationButtons", () => {

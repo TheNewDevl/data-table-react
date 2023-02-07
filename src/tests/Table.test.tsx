@@ -1,10 +1,10 @@
 import { describe, it } from "vitest";
-import { Table } from "../Table";
+import { Table } from "../components/Table/Table";
 import { fireEvent, getByRole, getByTestId, render } from "@testing-library/react";
 import { columns } from "../mocks/columnsMock";
 import { noMissingDataEmployees } from "../mocks/mockEmployees";
 import { TableCtxProvider } from "../context/TableContext";
-import { DataTableConfig } from "../types";
+import { DataTableConfig } from "../types/types";
 
 describe("Table integration", () => {
   const mockConfig: Partial<DataTableConfig> = {

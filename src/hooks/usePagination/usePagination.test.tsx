@@ -1,5 +1,5 @@
 import { describe, it, vi } from "vitest";
-import { DataTableConfig } from "../../types";
+import { DataTableConfig } from "../../types/types";
 import { act, renderHook } from "@testing-library/react";
 import { usePagination } from "./usePagination";
 import { mockEmployees } from "@fromjquerytoreact/client/src/utils/mocks";

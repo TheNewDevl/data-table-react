@@ -1,4 +1,4 @@
-import { DataTableConfig, SearchHookReturn } from "../../types";
+import { DataTableConfig, SearchHookReturn } from "../../types/types";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useTableCtx } from "../../context/TableContext";
 

@@ -1,4 +1,4 @@
-import { SortCompareFn } from "../../types";
+import { SortCompareFn } from "../../types/types";
 
 /**
  * Compare two dates creating a new Date object from the given params and using the getTime() method

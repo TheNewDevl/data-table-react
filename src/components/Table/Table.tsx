@@ -1,11 +1,11 @@
 import { FC, useMemo } from "react";
-import { useTableCtx } from "./context/TableContext";
-import { DataTableConfig, DataTableProps } from "./types";
-import { useSearch } from "./hooks/useSearch/useSearch";
-import { usePagination } from "./hooks/usePagination/usePagination";
-import { Pagination } from "./components/Pagination/Pagination";
-import { useSort } from "./hooks/useSort/useSort";
-import { isValidDate } from "./functions/dates/dates";
+import { useTableCtx } from "../../context/TableContext";
+import { DataTableConfig, DataTableProps } from "../../types/types";
+import { useSearch } from "../../hooks/useSearch/useSearch";
+import { usePagination } from "../../hooks/usePagination/usePagination";
+import { Pagination } from "../Pagination/Pagination";
+import { useSort } from "../../hooks/useSort/useSort";
+import { isValidDate } from "../../functions/dates/dates";
 
 const defaultConfig: DataTableConfig = {
   search: true,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DataTableConfig, SortConfig, SortHookReturn } from "../../types";
+import { DataTableConfig, SortConfig, SortHookReturn } from "../../types/types";
 import { useTableCtx } from "../../context/TableContext";
 import { isValidDate } from "../../functions/dates/dates";
 import { dateCompareFn, numberCompareFn, stringCompareFn } from "../../functions/sort/sort";

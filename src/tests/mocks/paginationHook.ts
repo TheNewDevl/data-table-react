@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { PaginationValues, PaginationHandlers } from "../../types";
+import { PaginationValues, PaginationHandlers } from "../../types/types";
 
 export const mockUsePagination = () => {
   const pagination = {

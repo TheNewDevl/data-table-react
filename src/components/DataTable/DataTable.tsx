@@ -1,8 +1,8 @@
-import { TableCtxProvider } from "./context/TableContext";
-import { noMissingDataEmployees } from "./mocks/mockEmployees";
-import { Table } from "./Table";
+import { TableCtxProvider } from "../../context/TableContext";
+import { noMissingDataEmployees } from "../../mocks/mockEmployees";
+import { Table } from "../Table/Table";
 import { FC } from "react";
-import { DataTableProps } from "./types";
+import { DataTableProps } from "../../types/types";
 
 /**
  * #Table component

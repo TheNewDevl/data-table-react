@@ -1,4 +1,4 @@
-import { PaginationProps } from "../../types";
+import { PaginationProps } from "../../types/types";
 import { expect, it, describe } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 import { Pagination } from "./Pagination";
