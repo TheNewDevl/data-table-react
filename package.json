@@ -1,12 +1,13 @@
 {
   "name": "@carlco/data-table-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "A simple data table component for React",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
+    "test-watch": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
     "build-package": "tsc --p tsconfig-package.json",
