@@ -101,6 +101,16 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
 
   const sortIndicator = (columnKey: string) =>
     sortConfig.sortKey === columnKey && (sortConfig.sortOrder === "asc" ? "↑" : "↓");
+  const sortIndicatorAria = (columnKey: string) =>
+    sortConfig.sortOrder === "asc" && sortConfig.sortKey === columnKey ? "descending" : "ascending";
+
+  const handleHeaderClickAndKeyDown = (e: any, columnKey: string, columnType: SortConfig["sortType"]) => {
+    if (configState.sortable) {
+      if ((e.type === "click" || (e.type === "keydown" && e.key === "Enter") || e.key === " ") && columnKey) {
+        handleSortConfig(columnKey, columnType);
+      }
+    }
+  };
 
   /** Render the table */
   return (
@@ -116,11 +126,15 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
           <tr>
             {columns?.map((column, index) => (
               <th
-                onClick={() => (configState.sortable ? handleSortConfig(column.data, column.type) : null)}
+                onClick={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type)}
+                onKeyDown={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type)}
                 key={index}
+                tabIndex={0}
+                aria-label={
+                  configState.sortable ? `Click to sort ${sortIndicatorAria(column.data)} by ${column.title}` : ""
+                }
               >
-                {column.title}
-                {sortIndicator(column.data)}
+                {column.title} {sortIndicator(column.data)}
               </th>
             ))}
           </tr>
@@ -135,9 +149,17 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
                     month: configState.dates.format,
                     day: "2-digit",
                   }).format(new Date(row[column.data]));
-                  return <td key={index}>{dateFormat}</td>;
+                  return (
+                    <td tabIndex={0} key={index}>
+                      {dateFormat}
+                    </td>
+                  );
                 } else {
-                  return <td key={index}>{row[column.data]}</td>;
+                  return (
+                    <td tabIndex={0} key={index}>
+                      {row[column.data]}
+                    </td>
+                  );
                 }
               })}
             </tr>

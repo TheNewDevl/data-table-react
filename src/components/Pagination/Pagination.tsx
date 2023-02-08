@@ -31,7 +31,7 @@ export const Pagination: FC<PaginationProps> = ({ columns, handlers, values, dat
         </div>
         <div>
           {paginatedData?.length ? (
-            <span>
+            <span tabIndex={0}>
               Showing {currentPage * rowsPerPage - rowsPerPage + 1} to{" "}
               {currentPage * rowsPerPage - (rowsPerPage - paginatedData.length)} of {dataLength} entries
             </span>
