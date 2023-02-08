@@ -19,5 +19,6 @@
   "include": [
     "src"
   ],
+  "exclude": ["node_modules", "**/tests", "**/*.test.ts", "**/*.test.tsx", "**/main.tsx", "**/vite-env.d.ts", "**/types.ts", "**/mocks"],
   "references": [{ "path": "./tsconfig.node.json"}]
 }

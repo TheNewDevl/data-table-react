@@ -1,8 +1,9 @@
 {
   "name": "@carlco/data-table-react",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "dist/data-table-react.umd.cjs",
+  "module": "dist/data-table-react.js",
   "types": "lib/index.d.ts",
   "description": "A simple data table component for React",
   "scripts": {
@@ -15,7 +16,6 @@
     "prepare": "npm run build-package",
     "prepublishOnly": "vitest run",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "vite-plugin-dts": "^1.7.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/react": "^18.0.26",
@@ -37,8 +38,14 @@
     "vitest": "^0.28.3"
   },
   "files": [
-    "lib/**/*",
+    "dist/**/*",
     "README.md"
   ],
-  "author": "Carl"
+  "author": "Carl",
+  "exports": {
+    ".": {
+      "import": "./dist/data-table-react.js",
+      "require": "./dist/data-table-react.umd.cjs"
+    }
+  }
 }
