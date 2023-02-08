@@ -6,7 +6,7 @@ import { usePagination } from "../../hooks/usePagination/usePagination";
 import { Pagination } from "../Pagination/Pagination";
 import { useSort } from "../../hooks/useSort/useSort";
 import { isValidDate } from "../../functions/dates/dates";
-import "../../styles/globalDefaultStyles.css";
+import { Styles } from "../../styles/Styles";
 
 const defaultConfig: DataTableConfig = {
   search: true,
@@ -131,6 +131,7 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({
   /** Render the table */
   return (
     <div className={`component-wrapper ${wrapperClassName ?? ""}`}>
+      <Styles />
       {configState.search && (
         <div className={`table-search-wrapper ${searchWrapperClassName ?? ""}`}>
           <label htmlFor="table-search">Search :</label>

@@ -1,6 +1,6 @@
 {
   "name": "@carlco/data-table-react",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "type": "module",
   "main": "dist/data-table-react.umd.cjs",
   "module": "dist/data-table-react.js",
