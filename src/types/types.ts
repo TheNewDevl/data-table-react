@@ -40,6 +40,11 @@ export interface DataTableProps {
     customSortFn?: ((a: any, b: any) => number) | undefined;
   }[];
   config?: Partial<DataTableConfig>;
+  wrapperClassName?: string;
+  tableClassName?: string;
+  searchWrapperClassName?: string;
+  paginationWrapperClassName?: string;
+  tfootClassName?: string;
 }
 
 // Search Hook
@@ -69,10 +74,11 @@ export interface PaginationHookReturn {
   paginationHandlers: PaginationHandlers;
 }
 export interface PaginationProps {
-  columns: number;
   values: PaginationValues;
   handlers: PaginationHandlers;
   dataLength: number;
+  paginationWrapperClassName?: string;
+  tfootClassName?: string;
 }
 export interface PaginationButtonsProps {
   values: PaginationValues;

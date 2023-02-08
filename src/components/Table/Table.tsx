@@ -81,12 +81,20 @@ const defaultConfig: DataTableConfig = {
  *  ```
  *
  */
-export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => {
+export const Table: FC<Omit<DataTableProps, "data">> = ({
+  columns,
+  config,
+  wrapperClassName,
+  tableClassName,
+  searchWrapperClassName,
+  tfootClassName,
+  paginationWrapperClassName,
+}) => {
   /** Mix default config and props config */
   const configState: DataTableConfig = useMemo(() => ({ ...defaultConfig, ...config }), [defaultConfig, config]);
 
   /** Get the context */
-  const { tableData } = useTableCtx();
+  const { tableData, initialData } = useTableCtx();
 
   /** Use the useSort hook */
   const { sortConfig, handleSortConfig, sortDataFn } = useSort(configState);
@@ -122,76 +130,77 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
   const dataToDisplay = configState.pagination ? paginationValues.paginatedData : tableData;
   /** Render the table */
   return (
-    <div className={"data-table"}>
+    <div className={`component-wrapper ${wrapperClassName ?? ""}`}>
       {configState.search && (
-        <div>
-          <label htmlFor="table-search">Search:</label>
+        <div className={`table-search-wrapper ${searchWrapperClassName ?? ""}`}>
+          <label htmlFor="table-search">Search :</label>
           <input role={"search"} type="text" id="table-search" value={searchTerm} onChange={handleSearch} />
         </div>
       )}
-      <table>
-        <thead>
-          <tr>
-            {columns?.map((column, index) => (
-              <th
-                onClick={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
-                onKeyDown={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
-                key={index}
-                tabIndex={0}
-                aria-label={
-                  configState.sortable ? `Click to sort ${sortIndicatorAria(column.data)} by ${column.title}` : ""
-                }
-              >
-                {column.title} {sortIndicator(column.data)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody data-testid={"tbody"}>
-          {dataToDisplay && dataToDisplay.length > 0 ? (
-            dataToDisplay.map((row, index) => (
-              <tr key={index}>
-                {columns?.map((column, index) => {
-                  if (column.type === "date" && isValidDate(row[column.data])) {
-                    const dateFormat = new Intl.DateTimeFormat(configState.dates.country, {
-                      year: "numeric",
-                      month: configState.dates.format,
-                      day: "2-digit",
-                    }).format(new Date(row[column.data]));
-                    return (
-                      <td tabIndex={0} key={index}>
-                        {dateFormat}
-                      </td>
-                    );
-                  } else {
-                    return (
-                      <td tabIndex={0} key={index}>
-                        {row[column.data]}
-                      </td>
-                    );
-                  }
-                })}
-              </tr>
-            ))
-          ) : (
+      <div className={`table-container ${tableClassName ?? ""}`}>
+        <table>
+          <thead>
             <tr>
-              <td style={{ textAlign: "center" }} colSpan={columns?.length} className={"no-data"}>
-                No data to display
-              </td>
+              {columns?.map((column, index) => (
+                <th
+                  onClick={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
+                  onKeyDown={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
+                  key={index}
+                  tabIndex={0}
+                  aria-label={
+                    configState.sortable ? `Click to sort ${sortIndicatorAria(column.data)} by ${column.title}` : ""
+                  }
+                >
+                  {column.title} {sortIndicator(column.data)}
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-        {configState.pagination && (
-          <tfoot data-testid="tfoot">
-            <Pagination
-              values={paginationValues}
-              handlers={paginationHandlers}
-              columns={columns?.length}
-              dataLength={tableData.length}
-            />
-          </tfoot>
-        )}
-      </table>
+          </thead>
+          <tbody data-testid={"tbody"}>
+            {dataToDisplay && dataToDisplay.length > 0 ? (
+              dataToDisplay.map((row, index) => (
+                <tr key={index}>
+                  {columns?.map((column, index) => {
+                    if (column.type === "date" && isValidDate(row[column.data])) {
+                      const dateFormat = new Intl.DateTimeFormat(configState.dates.country, {
+                        year: "numeric",
+                        month: configState.dates.format,
+                        day: "2-digit",
+                      }).format(new Date(row[column.data]));
+                      return (
+                        <td tabIndex={0} key={index}>
+                          {dateFormat}
+                        </td>
+                      );
+                    } else {
+                      return (
+                        <td tabIndex={0} key={index}>
+                          {row[column.data]}
+                        </td>
+                      );
+                    }
+                  })}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td style={{ textAlign: "center" }} colSpan={columns?.length}>
+                  No data to display
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {configState.pagination && (
+        <Pagination
+          paginationWrapperClassName={paginationWrapperClassName}
+          tfootClassName={tfootClassName}
+          values={paginationValues}
+          handlers={paginationHandlers}
+          dataLength={initialData.length}
+        />
+      )}
     </div>
   );
 };

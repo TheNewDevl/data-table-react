@@ -42,7 +42,7 @@ describe("Table integration", () => {
     expect(tbody.children.length).toBe(noMissingDataEmployees.length);
 
     // As pagination is disabled, the tfoot containing the pagination should not be displayed
-    expect(() => getByTestId("tfoot")).toThrow();
+    expect(() => getByTestId("pagination")).toThrow();
 
     // As the search is disabled, the search input should not be displayed
     expect(() => getByRole("search")).toThrow();
@@ -88,12 +88,10 @@ describe("Table integration", () => {
     const { getByText, getByTestId } = setup(mockConfig);
 
     const tbody = getByTestId("tbody");
-    const tfoot = getByTestId("tfoot");
     const pagination = getByTestId("pagination");
 
     // Check if the pagination is displayed correctly
     expect(tbody.children.length).toBe(10);
-    expect(tfoot).toBeInTheDocument();
     expect(pagination).toBeInTheDocument();
 
     // Check if the pagination is working correctly

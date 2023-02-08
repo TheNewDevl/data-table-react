@@ -8,7 +8,6 @@ import { noMissingDataEmployees } from "../../mocks/mockEmployees";
 export const setup = (props: Partial<PaginationProps> = {}) => {
   const { values, handlers } = mockUsePagination();
   const defaultProps: PaginationProps = {
-    columns: 5,
     dataLength: 20,
     values,
     handlers,
@@ -23,12 +22,6 @@ describe("Pagination component test suite", () => {
     const { getByTestId } = setup();
     const pagination = getByTestId("pagination");
     expect(pagination).toBeInTheDocument();
-  });
-
-  it("should set calSpan attribute", () => {
-    const { getByTestId, columns } = setup();
-    const pagination = getByTestId("pagination");
-    expect(pagination.firstElementChild).toHaveAttribute("colSpan", columns.toString());
   });
 
   it("should render a select with the correct number of options", () => {
