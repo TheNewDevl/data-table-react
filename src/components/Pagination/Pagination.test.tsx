@@ -3,7 +3,7 @@ import { expect, it, describe } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 import { Pagination } from "./Pagination";
 import { mockUsePagination } from "../../tests/mocks/paginationHook";
-import { mockEmployees } from "@fromjquerytoreact/client/src/utils/mocks";
+import { noMissingDataEmployees } from "../../mocks/mockEmployees";
 
 export const setup = (props: Partial<PaginationProps> = {}) => {
   const { values, handlers } = mockUsePagination();
@@ -52,7 +52,7 @@ describe("Pagination component test suite", () => {
 
   it("should show the correct number of items", () => {
     const { values, handlers } = mockUsePagination();
-    values.paginatedData = [...mockEmployees];
+    values.paginatedData = [...noMissingDataEmployees];
     const { getByText, dataLength } = setup({ values, handlers });
     const span = getByText(/Showing/i);
     expect(span).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("Pagination component test suite", () => {
 
   it("should change the number of rows when a option is selected", () => {
     const { values } = mockUsePagination();
-    values.paginatedData = [...mockEmployees];
+    values.paginatedData = [...noMissingDataEmployees];
     const { getByRole, handlers } = setup({ values });
     const select = getByRole("listbox");
     fireEvent.change(select, { target: { value: 8 } });

@@ -2,7 +2,7 @@ import { describe, it, vi } from "vitest";
 import { DataTableConfig } from "../../types/types";
 import { act, renderHook } from "@testing-library/react";
 import { usePagination } from "./usePagination";
-import { mockEmployees } from "@fromjquerytoreact/client/src/utils/mocks";
+import { noMissingDataEmployees } from "../../mocks/mockEmployees";
 import { ChangeEvent } from "react";
 import { calculateTotalPages, getButtons } from "./functions";
 
@@ -16,7 +16,7 @@ const config = { pagination: true };
 
 describe("usePagination test suite", () => {
   it("Should return default values", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     const { paginationValues, paginationHandlers } = result.current;
     const { decrementPage, incrementPage, selectPage, handleChangeRowsPerPage } = paginationHandlers;
     const { currentPage, rowsPerPage, rowsPerPageOpts, totalPages, pageButtons, isActive, paginatedData } =
@@ -37,19 +37,19 @@ describe("usePagination test suite", () => {
   });
 
   it("Should be 0", () => {
-    const result = renderHook(() => usePagination(undefined, { pagination: true }, mockEmployees));
+    const result = renderHook(() => usePagination(undefined, { pagination: true }, noMissingDataEmployees));
     expect(result.result.current.paginationValues.totalPages).toBe(1);
     expect(result.result.current.paginationValues.rowsPerPage).toBe(0);
   });
 
   it("Should have a different value if pagination is set to false", () => {
-    const result = renderHook(() => usePagination(undefined, { pagination: false }, mockEmployees));
+    const result = renderHook(() => usePagination(undefined, { pagination: false }, noMissingDataEmployees));
     expect(result.result.current.paginationValues.paginatedData).toBe(undefined);
     expect(result.result.current.paginationValues.totalPages).toBe(0);
   });
 
   it("Should increment page number only if < total pages", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() => result.current.paginationHandlers.incrementPage());
     expect(result.current.paginationValues.currentPage).toBe(2);
     act(() => result.current.paginationHandlers.incrementPage());
@@ -59,7 +59,7 @@ describe("usePagination test suite", () => {
   });
 
   it("Should decrement page number only if current page > 1", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() => result.current.paginationHandlers.decrementPage());
     expect(result.current.paginationValues.currentPage).toBe(1);
 
@@ -71,7 +71,7 @@ describe("usePagination test suite", () => {
   });
 
   it("Should set current page if page exists", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() => result.current.paginationHandlers.selectPage(3));
     expect(result.current.paginationValues.currentPage).toBe(3);
     act(() => result.current.paginationHandlers.selectPage(10));
@@ -79,7 +79,7 @@ describe("usePagination test suite", () => {
   });
 
   it("should change the rows per page state and set current page to one", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() => result.current.paginationHandlers.selectPage(3));
     expect(result.current.paginationValues.currentPage).toBe(3);
 
@@ -94,7 +94,7 @@ describe("usePagination test suite", () => {
   });
 
   it("should not be able to set rowsPerPage value to 0", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() =>
       result.current.paginationHandlers.handleChangeRowsPerPage({
         target: { value: "0" },
@@ -110,7 +110,7 @@ describe("usePagination test suite", () => {
   });
 
   it("should return if page is active ", () => {
-    const { result } = setup(mockEmployees, config);
+    const { result } = setup(noMissingDataEmployees, config);
     act(() => result.current.paginationHandlers.selectPage(3));
     expect(result.current.paginationValues.isActive(3)).toBe(true);
     expect(result.current.paginationValues.isActive(4)).toBe(false);
@@ -122,7 +122,7 @@ describe("usePagination test suite", () => {
   it("should add and remove event listener", () => {
     const addEventListener = vi.spyOn(window, "addEventListener");
     const removeEventListener = vi.spyOn(window, "removeEventListener");
-    const { unmount } = setup(mockEmployees, config);
+    const { unmount } = setup(noMissingDataEmployees, config);
     expect(addEventListener).toHaveBeenCalledWith("filter", expect.any(Function));
     act(() => unmount());
     expect(removeEventListener).toHaveBeenCalledWith("filter", expect.any(Function));
