@@ -4,16 +4,15 @@
   "type": "module",
   "main": "dist/data-table-react.umd.cjs",
   "module": "dist/data-table-react.js",
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "description": "A simple data table component for React",
   "scripts": {
     "test": "vitest run",
     "test-watch": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
-    "build-package": "tsc --p tsconfig-package.json",
     "preview": "vite preview",
-    "prepare": "npm run build-package",
+    "prepare": "npm run build",
     "prepublishOnly": "vitest run",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "preversion": "npm run lint",
@@ -42,6 +41,9 @@
     "README.md"
   ],
   "author": "Carl",
+  "repository": {
+    "url": "https://github.com/TheNewDevl/data-table-react"
+  },
   "exports": {
     ".": {
       "import": "./dist/data-table-react.js",
