@@ -77,6 +77,17 @@ const defaultConfig: DataTableConfig = {
 };
 ```
 
+### wrapperClassName (optional) : string
+Add a class to the wrapper div of the component
+### tableClassName (optional) : string
+Add a class to the div that contains the table
+### searchWrapperClassName (optional) : string
+Add a class to the div that contains the search input
+### paginationWrapperClassName (optional) : string
+Add a class to the div that contains the pagination buttons and the text "Showing..."
+### tfootClassName (optional) : string
+Add a class to footer of the table
+
 ## Types
 
 If you are using typescript, you can import the types for the Data Table Component:
