@@ -112,6 +112,7 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
     }
   };
 
+  const dataToDisplay = configState.pagination ? paginationValues.paginatedData : tableData;
   /** Render the table */
   return (
     <div>
@@ -140,30 +141,38 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
           </tr>
         </thead>
         <tbody data-testid={"tbody"}>
-          {(configState.pagination ? paginationValues.paginatedData : tableData)?.map((row, index) => (
-            <tr key={index}>
-              {columns?.map((column, index) => {
-                if (column.type === "date" && isValidDate(row[column.data])) {
-                  const dateFormat = new Intl.DateTimeFormat(configState.dates.country, {
-                    year: "numeric",
-                    month: configState.dates.format,
-                    day: "2-digit",
-                  }).format(new Date(row[column.data]));
-                  return (
-                    <td tabIndex={0} key={index}>
-                      {dateFormat}
-                    </td>
-                  );
-                } else {
-                  return (
-                    <td tabIndex={0} key={index}>
-                      {row[column.data]}
-                    </td>
-                  );
-                }
-              })}
+          {dataToDisplay && dataToDisplay.length > 0 ? (
+            dataToDisplay.map((row, index) => (
+              <tr key={index}>
+                {columns?.map((column, index) => {
+                  if (column.type === "date" && isValidDate(row[column.data])) {
+                    const dateFormat = new Intl.DateTimeFormat(configState.dates.country, {
+                      year: "numeric",
+                      month: configState.dates.format,
+                      day: "2-digit",
+                    }).format(new Date(row[column.data]));
+                    return (
+                      <td tabIndex={0} key={index}>
+                        {dateFormat}
+                      </td>
+                    );
+                  } else {
+                    return (
+                      <td tabIndex={0} key={index}>
+                        {row[column.data]}
+                      </td>
+                    );
+                  }
+                })}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td style={{ textAlign: "center" }} colSpan={columns?.length} className={"no-data"}>
+                No data to display
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
         {configState.pagination && (
           <tfoot data-testid="tfoot">
