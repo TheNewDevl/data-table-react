@@ -10,6 +10,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
     sortKey: "",
     sortOrder: "asc",
     sortType: undefined,
+    customSortFn: undefined,
   });
 
   /** Get data from ctx */
@@ -19,12 +20,18 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
    * Update sort config. If the same key is clicked, toggle the sort order
    * @param key - Key to sort by
    * @param type - Type of data to sort
+   * @param customSortFn - Custom sort function
    */
-  const handleSortConfig = (key: string, type: SortConfig["sortType"]): void => {
+  const handleSortConfig = (
+    key: string,
+    type: SortConfig["sortType"],
+    customSortFn: ((a: any, b: any) => number) | undefined
+  ): void => {
     setSortConfig({
       sortKey: key,
       sortOrder: sortConfig.sortKey === key && sortConfig.sortOrder === "asc" ? "desc" : "asc",
       sortType: type ?? undefined,
+      customSortFn: customSortFn ?? undefined,
     });
   };
 
@@ -36,7 +43,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
    *  @param data - Data to sort
    */
   const sortDataFn = (data: any[]): any[] => {
-    const { sortKey, sortOrder, sortType } = sortConfig;
+    const { sortKey, sortOrder, sortType, customSortFn } = sortConfig;
     if (!sortKey || !sortable) return data;
 
     return [...data].sort((a, b) => {
@@ -48,6 +55,7 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
       // Check if value exists, if not, replace with default value
       const valA = a[sortKey] ?? defaultValues[sortType ?? "string"];
       const valB = b[sortKey] ?? defaultValues[sortType ?? "string"];
+      if (customSortFn) return customSortFn(valA, valB);
 
       // Call the correct compare function based on the sort type
       if (sortType === "date" && isValidDate(valA) && isValidDate(valB)) {

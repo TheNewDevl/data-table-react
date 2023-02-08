@@ -44,7 +44,7 @@ describe("useSort tests suit", () => {
     });
     expect(result.current.sortConfig).toEqual({ sortKey, sortType, sortOrder: "desc" });
     act(() => {
-      result.current.handleSortConfig(sortKey);
+      result.current.handleSortConfig(sortKey, undefined);
     });
     expect(result.current.sortConfig).toEqual({ sortKey, sortOrder: "asc" });
   });

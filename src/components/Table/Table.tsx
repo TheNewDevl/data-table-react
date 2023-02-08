@@ -105,7 +105,12 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
   const sortIndicatorAria = (columnKey: string) =>
     sortConfig.sortOrder === "asc" && sortConfig.sortKey === columnKey ? "descending" : "ascending";
 
-  const handleHeaderClickAndKeyDown = (e: any, columnKey: string, columnType: SortConfig["sortType"]) => {
+  const handleHeaderClickAndKeyDown = (
+    e: any,
+    columnKey: string,
+    columnType: SortConfig["sortType"],
+    customSortFn: ((a: any, b: any) => number) | undefined
+  ) => {
     if (configState.sortable) {
       if ((e.type === "click" || (e.type === "keydown" && e.key === "Enter") || e.key === " ") && columnKey) {
         handleSortConfig(columnKey, columnType);
@@ -128,8 +133,8 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
           <tr>
             {columns?.map((column, index) => (
               <th
-                onClick={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type)}
-                onKeyDown={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type)}
+                onClick={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
+                onKeyDown={(e) => handleHeaderClickAndKeyDown(e, column.data, column.type, column.customSortFn)}
                 key={index}
                 tabIndex={0}
                 aria-label={

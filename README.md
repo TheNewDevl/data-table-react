@@ -52,8 +52,9 @@ Each object will represent a columns.
 - data: the key of the object in the data array
 - title: the title of the column ( will be displayed in the header )
 
-1 key is optional:
+2 key are optional:
 - type: the type of the column. It can be "date", "number" or "string". I strongly recommend to use it especially for date columns.
+- customSortFn: a custom sort function for the column. It will override the default sort function. It will be called with 2 arguments: the 2 values to compare. sortOrder will be ignored
 
 ### config (optional) : Object
 The configuration for the Data Table Component.

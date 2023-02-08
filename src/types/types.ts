@@ -17,6 +17,7 @@ export interface ColumnType {
   title: string;
   data: DataKey;
   type?: SortConfig["sortType"];
+  customSortFn?: ((a: any, b: any) => number) | undefined;
 }
 
 //Data table component
@@ -32,7 +33,12 @@ export interface DataTableConfig {
 }
 export interface DataTableProps {
   data: any[];
-  columns: { title: string; data: string; type?: SortConfig["sortType"] }[];
+  columns: {
+    title: string;
+    data: string;
+    type?: SortConfig["sortType"];
+    customSortFn?: ((a: any, b: any) => number) | undefined;
+  }[];
   config?: Partial<DataTableConfig>;
 }
 
@@ -78,10 +84,15 @@ export interface SortConfig {
   sortKey: string;
   sortOrder: "asc" | "desc";
   sortType: "string" | "number" | "date" | undefined;
+  customSortFn: ((a: any, b: any) => number) | undefined;
 }
 export interface SortHookReturn {
   sortConfig: SortConfig;
-  handleSortConfig: (key: string, type?: SortConfig["sortType"]) => void;
+  handleSortConfig: (
+    key: string,
+    type: SortConfig["sortType"],
+    customSortFn?: ((a: any, b: any) => number) | undefined
+  ) => void;
   sortDataFn: (data: any[]) => any[];
 }
 export type SortCompareFn = (a: any, b: any, sortOrder?: SortConfig["sortOrder"]) => number;
