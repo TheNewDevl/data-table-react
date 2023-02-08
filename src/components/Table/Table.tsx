@@ -1,11 +1,12 @@
 import { FC, useMemo } from "react";
 import { useTableCtx } from "../../context/TableContext";
-import { DataTableConfig, DataTableProps } from "../../types/types";
+import { DataTableConfig, DataTableProps, SortConfig } from "../../types/types";
 import { useSearch } from "../../hooks/useSearch/useSearch";
 import { usePagination } from "../../hooks/usePagination/usePagination";
 import { Pagination } from "../Pagination/Pagination";
 import { useSort } from "../../hooks/useSort/useSort";
 import { isValidDate } from "../../functions/dates/dates";
+import "../../styles/globalDefaultStyles.css";
 
 const defaultConfig: DataTableConfig = {
   search: true,
@@ -115,7 +116,7 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
   const dataToDisplay = configState.pagination ? paginationValues.paginatedData : tableData;
   /** Render the table */
   return (
-    <div>
+    <div className={"data-table"}>
       {configState.search && (
         <div>
           <label htmlFor="table-search">Search:</label>
@@ -179,7 +180,7 @@ export const Table: FC<Omit<DataTableProps, "data">> = ({ columns, config }) => 
             <Pagination
               values={paginationValues}
               handlers={paginationHandlers}
-              columns={columns.length}
+              columns={columns?.length}
               dataLength={tableData.length}
             />
           </tfoot>

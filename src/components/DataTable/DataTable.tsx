@@ -72,6 +72,40 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
     console.error("The data you provided is not an array.");
     return <p>The data you provides is not an array</p>;
   } else {
+    // check if the data is an array of objects
+    if (!columns && data.every((item) => item instanceof Object)) {
+      console.warn("You didn't provide any columns to the table. So the table will create columns from the data.");
+      // create columns from the data
+      columns = Object.keys(data[0]).map((key) => ({ title: key, data: key }));
+    } else if (!columns) {
+      console.error("You didn't provide any columns to the table and the data is not an array of objects.");
+      return (
+        <p>
+          You didn't provide any columns to the table and the data is not an array of objects. So it's not possible to
+          extract columns"
+        </p>
+      );
+    } else if (
+      columns &&
+      columns.every((item) => item instanceof Object && item.data && item.title) &&
+      !data.every((item) => item instanceof Object)
+    ) {
+      // If the data is not an array of objects but the columns are, we try to parse the data to match the columns
+      const transformedData = [];
+      const numberOfColumns = columns.length;
+      for (let i = 0; i < data.length; i += numberOfColumns) {
+        const obj: { [key: string]: any } = {};
+        for (let j = 0; j < numberOfColumns; j++) {
+          obj[columns[j].data] = data[i + j];
+        }
+        transformedData.push(obj);
+      }
+      data = transformedData;
+      if (data.length % numberOfColumns !== 0) {
+        console.warn("The data you provided doesn't match the columns.");
+      }
+    }
+
     return (
       <TableCtxProvider data={data}>
         <Table columns={columns} config={config} />
