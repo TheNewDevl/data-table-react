@@ -49,5 +49,6 @@
       "import": "./dist/data-table-react.js",
       "require": "./dist/data-table-react.umd.cjs"
     }
-  }
+  },
+  "license": "Apache-2.0"
 }
