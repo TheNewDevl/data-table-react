@@ -34,3 +34,15 @@ export const numberCompareFn: SortCompareFn = (a, b, sortOrder) => {
 export const stringCompareFn: SortCompareFn = (a, b, sortOrder) => {
   return sortOrder === "asc" || !sortOrder ? a.localeCompare(b) : b.localeCompare(a);
 };
+
+/**
+ * Compare two booleans
+ * @param a - First boolean to compare
+ * @param b - Second boolean to compare
+ * @param sortOrder - Sort order (asc | desc) - Default: "asc"
+ * @returns number
+ */
+export const booleanCompareFn: SortCompareFn = (a, b, sortOrder) => {
+  if (a === b) return 0;
+  return sortOrder === "asc" || !sortOrder ? (a ? -1 : 1) : a ? 1 : -1;
+};

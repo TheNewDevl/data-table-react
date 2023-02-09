@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataTableConfig, SortConfig, SortHookReturn } from "../../types/types";
 import { useTableCtx } from "../../context/TableContext";
 import { isValidDate } from "../../functions/dates/dates";
-import { dateCompareFn, numberCompareFn, stringCompareFn } from "../../functions/sort/sort";
+import { booleanCompareFn, dateCompareFn, numberCompareFn, stringCompareFn } from "../../functions/sort/sort";
 
 export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn => {
   /** Sort config States */
@@ -70,9 +70,13 @@ export const useSort = ({ sortable }: Partial<DataTableConfig>): SortHookReturn 
           return dateCompareFn(valA, valB, sortOrder);
         } else if (!isNaN(valA) && !isNaN(valB)) {
           return numberCompareFn(valA, valB, sortOrder);
+        } else if (typeof valA === "boolean" && typeof valB === "boolean") {
+          return booleanCompareFn(valA, valB, sortOrder);
+        } else if (typeof valA === "string" && typeof valB === "string") {
+          return stringCompareFn(valA, valB, sortOrder);
         }
       }
-      return stringCompareFn(valA, valB, sortOrder);
+      return 0;
     });
   };
 
