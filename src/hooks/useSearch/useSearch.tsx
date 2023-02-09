@@ -26,7 +26,7 @@ export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: an
   const filteredData = useMemo(() => {
     if (config.search) {
       return initialData.filter((item: { [key: string]: any }) =>
-        Object.values(item).some((val) => val.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+        Object.values(item).some((val) => val?.toString().toLowerCase().includes(searchTerm.toLowerCase()))
       );
     } else {
       return tableData;

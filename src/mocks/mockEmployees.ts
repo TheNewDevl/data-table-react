@@ -223,8 +223,8 @@ export const noMissingDataEmployees = [
 
 export const missingDataEmployees = [
   {
-    firstName: "Corri",
-    lastName: "Crannach",
+    firstName: null,
+    lastName: "",
     dateOfBirth: "08/06/1942",
     department: "Engineering",
     street: "2810 Mockingbird Place",
