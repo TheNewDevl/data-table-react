@@ -1,6 +1,6 @@
 {
   "name": "@carlco/data-table-react",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "type": "module",
   "main": "dist/data-table-react.umd.cjs",
   "module": "dist/data-table-react.js",
@@ -12,8 +12,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "npm run build",
-    "prepublishOnly": "vitest run",
+    "prepublishOnly": "vitest run && npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
@@ -38,7 +37,8 @@
   },
   "files": [
     "dist/**/*",
-    "README.md"
+    "README.md",
+    "LICENSE.txt"
   ],
   "author": "Carl",
   "repository": {
