@@ -10,7 +10,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       //@ts-ignore
-      beforeWriteFile: (filePath, content) => (!filePath.includes("index") ? false : content),
+      beforeWriteFile: (filePath, content) => (!/.*(index|datatable|types)\.d\.ts$/i.test(filePath) ? false : content),
     }),
   ],
   test: {

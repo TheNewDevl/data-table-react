@@ -32,6 +32,11 @@ import { DataTableProps } from "../../types/types";
  * @param data The data to display in the table.
  * @param columns The columns to display in the table.
  * @param config - The configuration object of the table.
+ * @param wrapperClassName -  Add a class to the wrapper div of the component.
+ * @param tableClassName -  Add a class to the div that contains the table.
+ * @param searchWrapperClassName -  Add a class to the div that contains the search input.
+ * @param tfootClassName -  Add a class to footer of the table.
+ * @param paginationWrapperClassName -  Add a class to the div that contains the pagination buttons and the text "Showing...".
  * @returns The Table component
  *
  * @example
@@ -65,7 +70,16 @@ import { DataTableProps } from "../../types/types";
  *  ```
  *
  */
-export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
+export const DataTable: FC<DataTableProps> = ({
+  data,
+  columns,
+  config,
+  wrapperClassName,
+  tableClassName,
+  searchWrapperClassName,
+  tfootClassName,
+  paginationWrapperClassName,
+}) => {
   if (!data) {
     console.error("You didn't provide any data to the table.");
     return <p>You didn't provide any data to the table</p>;
@@ -109,7 +123,15 @@ export const DataTable: FC<DataTableProps> = ({ data, columns, config }) => {
 
     return (
       <TableCtxProvider data={data}>
-        <Table columns={columns} config={config} />
+        <Table
+          columns={columns}
+          config={config}
+          tfootClassName={tfootClassName}
+          paginationWrapperClassName={paginationWrapperClassName}
+          wrapperClassName={wrapperClassName}
+          searchWrapperClassName={searchWrapperClassName}
+          tableClassName={tableClassName}
+        />
       </TableCtxProvider>
     );
   }
