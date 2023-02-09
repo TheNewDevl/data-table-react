@@ -19,7 +19,7 @@ export const useSearch = (config: Partial<DataTableConfig>, sortData?: (data: an
    * @param event - The input change event
    */
   const handleSearch = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSearchTerm(event.target.value.trim());
+    setSearchTerm(event.target.value);
   };
 
   /** Filter the data using the search term. Will only recompute if initial data or search term change */
